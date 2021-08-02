@@ -15,7 +15,7 @@
         <div class="ui main right aligned container search">
             <div class="ui icon input">
                 <input class="prompt" type="text" name="search" placeholder="Search todos...">
-                <button class"prompt" type="submit">
+                <button class="ui icon button" type="submit">
                     <i class="search icon"></i>
                 </button>
             </div>
@@ -44,9 +44,9 @@
         <br />
         <hr>
 
-        <div class="ui cards">
+        <div class="ui  cards">
             {% for todo in todo_list %}
-            <div class="card">
+            <div class="ui centered card">
                 <div class="content">
                     <div class="ui big header"> {{ todo.title }}
                     </div>

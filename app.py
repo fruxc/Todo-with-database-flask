@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import text
-import sqlite3
-import sys
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -22,7 +20,7 @@ def index():
     # Show all todo items
     todo_list = Todo.query.all()
 
-    return render_template('index.html', todo_list=todo_list)
+    return render_template('todo.html', todo_list=todo_list)
 
 
 @ app.route('/add', methods=['POST'])
@@ -58,8 +56,8 @@ def search():
     search = request.form.get('search')
     data = Todo.query.filter_by(title=search).all()
     if len(data) == 0:
-        return render_template('index.html', todo_list=Todo.query.all())
-    return render_template('index.html', todo_list=data)
+        return render_template('todo.html', todo_list=Todo.query.all())
+    return render_template('todo.html', todo_list=data)
 
 
 if __name__ == '__main__':
