@@ -7,7 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <br />
+    <form action="/search" method="post">
+        <div class="ui main right aligned container search">
+            <div class="ui icon input">
+                <input class="prompt" type="text" name="search" placeholder="Search todos...">
+                <button class"prompt" type="submit">
+                    <i class="search icon"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 </head>
 
 
@@ -18,7 +31,7 @@
         <form class="ui form" action="/add" method="post">
             <div class="field">
                 <label>Todo Title</label>
-                <input type="text" name="title" placeholder="Enter Title"><br />
+                <input type="text" name="title" placeholder="Enter Title" required><br />
             </div>
             <div class="field">
                 <label>Todo Description</label>
@@ -31,20 +44,34 @@
         <br />
         <hr>
 
-        {% set i = 1 %}
-        {% for todo in todo_list %}
-        <div class="ui segment">
-            <p class="ui big header">{{ todo.id }}: {{ todo.title }}</p>
-            {% if todo.complete == False %}
-            <span class="ui gray label">Not Complete</span>
-            {% else %}
-            <span class="ui basic green label">Completed</span>
-            {% endif %}
+        <div class="ui cards">
+            {% for todo in todo_list %}
+            <div class="card">
+                <div class="content">
+                    {% set title_edit = False %}
+                    {% if title_edit == False %}
+                    <div class="ui big header"> {{ todo.title }}<i class="right floated edit outline icon"></i></div>
+                    {% endif %}
+                    <div class="ui subheader">{{ todo.description }}<i class="right floated edit outline icon"></i>
+                    </div><br /><br />
 
-            <a class="ui basic blue button" href="/update/{{ todo.id }}">Update</a>
-            <a class="ui basic right floated red button" href="/delete/{{ todo.id }}">Delete</a>
+                    <div>
+                        {% if todo.complete == False %}
+                        <button class="ui left floated button">Not Completed</button>
+                        {% else %}
+                        <button class="ui right floated green button">Completed</button>
+                        {% endif %}
+                    </div><br /><br /><br />
+                    <div class="extra content">
+                        <div class="ui two buttons">
+                            <a class="ui basic blue button" href="/update/{{ todo.id }}">Update</a>
+                            <a class="ui basic right floated red button" href="/delete/{{ todo.id }}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </body>
 
