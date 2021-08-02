@@ -9,7 +9,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-app = Flask(__name__)
 auth = HTTPBasicAuth()
 
 users = {
@@ -28,7 +27,9 @@ def verify_password(username, password):
 @app.route('/')
 @auth.login_required
 def index():
-    return "Hello, {}!".format(auth.current_user())
+    # Show all todo items
+    todo_list = Todo.query.all()
+    return render_template('todo.html', todo_list=todo_list)
 
 
 class Todo(db.Model):
@@ -38,15 +39,12 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 
-@ app.route('/')
-def index():
-    # Show all todo items
-    todo_list = Todo.query.all()
-
-    return render_template('todo.html', todo_list=todo_list)
+# @ app.route('/')
+# def index():
 
 
-@ app.route('/add', methods=['POST'])
+@app.route('/add', methods=['POST'])
+@auth.login_required
 def add():
     # add a new todo item
     new_todo = Todo(title=request.form.get('title'),
@@ -56,7 +54,8 @@ def add():
     return redirect(url_for('index'))
 
 
-@ app.route('/update/<int:todo_id>')
+@app.route('/update/<int:todo_id>')
+@auth.login_required
 def update(todo_id):
     # update item
     todo = Todo.query.filter_by(id=todo_id).first()
@@ -65,7 +64,8 @@ def update(todo_id):
     return redirect(url_for('index'))
 
 
-@ app.route('/delete/<int:todo_id>')
+@app.route('/delete/<int:todo_id>')
+@auth.login_required
 def delete(todo_id):
     # update item
     todo = Todo.query.filter_by(id=todo_id).first()
@@ -75,6 +75,7 @@ def delete(todo_id):
 
 
 @app.route('/search', methods=['POST'])
+@auth.login_required
 def search():
     search = request.form.get('search')
     data = Todo.query.filter_by(title=search).all()
