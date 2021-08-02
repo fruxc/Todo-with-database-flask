@@ -17,20 +17,11 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 
-@app.route('/search', methods=['POST'])
-def search():
-    search = request.form.get('search')
-    data = Todo.query.filter_by(title=search).all()
-    if len(data) == 0:
-        return render_template('index.html', todo_list = Todo.query.all())
-    return render_template('index.html', todo_list=data)
-
-
 @ app.route('/')
 def index():
     # Show all todo items
     todo_list = Todo.query.all()
-    print(todo_list)
+
     return render_template('index.html', todo_list=todo_list)
 
 
@@ -60,6 +51,15 @@ def delete(todo_id):
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    search = request.form.get('search')
+    data = Todo.query.filter_by(title=search).all()
+    if len(data) == 0:
+        return render_template('index.html', todo_list=Todo.query.all())
+    return render_template('index.html', todo_list=data)
 
 
 if __name__ == '__main__':

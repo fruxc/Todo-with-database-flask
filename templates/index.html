@@ -48,13 +48,10 @@
             {% for todo in todo_list %}
             <div class="card">
                 <div class="content">
-                    {% set title_edit = False %}
-                    {% if title_edit == False %}
-                    <div class="ui big header"> {{ todo.title }}<i class="right floated edit outline icon"></i></div>
-                    {% endif %}
-                    <div class="ui subheader">{{ todo.description }}<i class="right floated edit outline icon"></i>
+                    <div class="ui big header"> {{ todo.title }}
+                    </div>
+                    <div class="ui subheader">{{ todo.description }}
                     </div><br /><br />
-
                     <div>
                         {% if todo.complete == False %}
                         <button class="ui left floated button">Not Completed</button>
