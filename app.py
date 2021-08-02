@@ -12,8 +12,7 @@ db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
 
 users = {
-    "john": generate_password_hash("hello"),
-    "susan": generate_password_hash("bye")
+    "admin": generate_password_hash("123"),
 }
 
 
