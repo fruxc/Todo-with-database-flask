@@ -18,4 +18,4 @@ python app.py || flask run
 
 ### UI Screenshot
 
-![First](https://github.com/fruxc/PharMedic/blob/main/src/assets/images/1.png?raw=true "first")
+![First](https://github.com/fruxc/Todo-with-database-flask/blob/master/screenshots/Todo-App.png?raw=true "first")
